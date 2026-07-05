@@ -3,31 +3,38 @@
 namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\State\ProcessorInterface;
+use ApiPlatform\State\ProcessorInterface; // à enlever ?
 
-// ajout de l'entité, le service et l'autowire 
+// ajout de l'entité, le service et l'autowire et l'uuid 
 use App\Entity\Recording;
 use App\Service\NotificationService;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Uid\Uuid;
+
 
 
 class RecordingProcessor implements ProcessorInterface
 {
     public function __construct(
-        #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')]
-        private ProcessorInterface $persistProcessor,
+        #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')] // à enlever ?
+        private ProcessorInterface $persistProcessor, // à enlever ?
         private NotificationService $notificationService
     )
     {} 
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Recording
     {
-        $audioKey = $data->getAudioKey(); // comment je convertis audioKey en uuid ? 
+        $uuid = Uuid::uuid4();
+        $audioKey = $uuid->toString();
         $data->setAudioKey($audioKey);
 
-        $title = $data->getStory(getTitle()); // ça fonctionne, ça ? 
+        $date_now = new \Date();
+        $data->setCreatedAt($date_now);
 
-        $notificationService.notify($audioKey, $title);
+        $story = $data->getStory(); 
+        $title = $story->getTitle();
+
+        $this->notificationService.notifier($audioKey, $title);
 
         return $this->persistProcessor->process($data, $operation, $uriVariables, $context);
         
