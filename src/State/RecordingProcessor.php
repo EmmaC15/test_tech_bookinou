@@ -18,7 +18,7 @@ class RecordingProcessor implements ProcessorInterface
         private ProcessorInterface $persistProcessor,
         private NotificationService $notificationService
     )
-    {}
+    {} 
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Recording
     {
