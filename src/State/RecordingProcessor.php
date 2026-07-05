@@ -34,7 +34,7 @@ class RecordingProcessor implements ProcessorInterface
         $story = $data->getStory(); 
         $title = $story->getTitle();
 
-        $this->notificationService.notifier($audioKey, $title);
+        $notificationService->notifier($audioKey, $title);
 
         return $this->persistProcessor->process($data, $operation, $uriVariables, $context);
         

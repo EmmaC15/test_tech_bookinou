@@ -13,11 +13,12 @@ use ApiPlatform\Metadata\Post;
 use App\State\RecordingProcessor;
 
 #[ORM\Entity(repositoryClass: RecordingRepository::class)]
-//#[ApiResource] -> ajout : 
 #[ApiResource(
     operations: [
         new Post(processor: RecordingProcessor::class),
         new Get(),
+        new Patch(),
+        new Delete(),
     ]
 )]
 class Recording
@@ -25,7 +26,7 @@ class Recording
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $audioKey = null;

@@ -1,5 +1,7 @@
 <?php 
 
+namespace App\Service;
+
 use Psr\Log\LoggerInterface;
 
 class NotificationService
