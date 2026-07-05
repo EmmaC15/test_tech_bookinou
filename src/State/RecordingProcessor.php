@@ -3,7 +3,7 @@
 namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\State\ProcessorInterface; // à enlever ?
+use ApiPlatform\State\ProcessorInterface; 
 
 // ajout de l'entité, le service et l'autowire et l'uuid 
 use App\Entity\Recording;
@@ -16,8 +16,8 @@ use Symfony\Component\Uid\Uuid;
 class RecordingProcessor implements ProcessorInterface
 {
     public function __construct(
-        #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')] // à enlever ?
-        private ProcessorInterface $persistProcessor, // à enlever ?
+        #[Autowire(service: 'api_platform.doctrine.orm.state.persist_processor')] 
+        private ProcessorInterface $persistProcessor, 
         private NotificationService $notificationService
     )
     {} 
@@ -28,7 +28,7 @@ class RecordingProcessor implements ProcessorInterface
         $audioKey = $uuid->toString();
         $data->setAudioKey($audioKey);
 
-        $date_now = new \Date();
+        $date_now = new \DateTime();
         $data->setCreatedAt($date_now);
 
         $story = $data->getStory(); 
