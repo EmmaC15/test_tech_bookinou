@@ -24,7 +24,7 @@ class RecordingProcessor implements ProcessorInterface
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Recording
     {
-        $uuid = Uuid::uuid4();
+        $uuid = Uuid::v4();
         $audioKey = $uuid->toString();
         $data->setAudioKey($audioKey);
 
