@@ -7,12 +7,14 @@ use App\Repository\RecordingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-// ajouts de ces lignes 
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use App\State\RecordingProcessor;
+
+// ajout de cette ligne 
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: RecordingRepository::class)]
 #[ApiResource(
@@ -32,16 +34,20 @@ class Recording
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('story:read')] // ajout de cette ligne
     private ?string $audioKey = null;
 
     #[ORM\Column]
+    #[Groups('story:read')] // ajout de cette ligne
     private ?\DateTime $createdAt = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups('story:read')] // ajout de cette ligne
     private ?string $narrator = null;
 
     #[ORM\ManyToOne(inversedBy: 'recordings')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups('story:read')] // ajout de cette ligne
     private ?Story $story = null;
 
     public function getId(): ?Uuid

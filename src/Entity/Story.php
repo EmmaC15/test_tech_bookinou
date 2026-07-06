@@ -9,8 +9,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
+// ajout de cette ligne 
+use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: StoryRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['story:read']], // ajout de cette ligne 
+)]
 class Story
 {
     #[ORM\Id]
@@ -19,6 +24,7 @@ class Story
     #[ORM\CustomIdGenerator('doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
+    #[Groups('story:read')] // ajout de cette ligne
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
@@ -29,6 +35,7 @@ class Story
      * @var Collection<int, Recording>
      */
     #[ORM\OneToMany(targetEntity: Recording::class, mappedBy: 'story')]
+    #[Groups('story:read')] // ajout de cette ligne
     private Collection $recordings;
 
     public function __construct()
