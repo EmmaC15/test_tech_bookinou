@@ -7,9 +7,11 @@ use App\Repository\RecordingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
-// ajouts des 3 lignes 
+// ajouts de ces lignes 
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use App\State\RecordingProcessor;
 
 #[ORM\Entity(repositoryClass: RecordingRepository::class)]
@@ -24,8 +26,9 @@ use App\State\RecordingProcessor;
 class Recording
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: 'uuid')]
+    #[ORM\CustomIdGenerator('doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
@@ -41,7 +44,7 @@ class Recording
     #[ORM\JoinColumn(nullable: false)]
     private ?Story $story = null;
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }

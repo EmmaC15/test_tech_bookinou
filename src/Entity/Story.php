@@ -14,8 +14,9 @@ use Symfony\Component\Uid\Uuid;
 class Story
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\Column(type: 'uuid')]
+    #[ORM\CustomIdGenerator('doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
@@ -35,7 +36,7 @@ class Story
         $this->recordings = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
