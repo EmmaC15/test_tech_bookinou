@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: StoryRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => ['story:read']], // ajout de cette ligne 
+    normalizationContext: ['groups' => ['story:read']], 
 )]
 class Story
 {
@@ -25,7 +25,7 @@ class Story
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('story:read')] // ajout de cette ligne
+    #[Groups('story:read')] 
     private ?string $title = null;
 
     #[ORM\Column(length: 13)]
@@ -35,7 +35,7 @@ class Story
      * @var Collection<int, Recording>
      */
     #[ORM\OneToMany(targetEntity: Recording::class, mappedBy: 'story')]
-    #[Groups('story:read')] // ajout de cette ligne
+    #[Groups('story:read')] 
     private Collection $recordings;
 
     public function __construct()

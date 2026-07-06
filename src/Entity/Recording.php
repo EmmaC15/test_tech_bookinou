@@ -14,12 +14,10 @@ use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use App\State\RecordingProcessor;
 
-// ajout de cette ligne 
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: RecordingRepository::class)]
 #[ApiResource(
-    normalizationContext: ['groups' => ['recording:read']],
     operations: [
         new Post(processor: RecordingProcessor::class),
         new Get(),
@@ -37,15 +35,15 @@ class Recording
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('story:read', 'recording:read')] // ajout de cette ligne
+    #[Groups('story:read')] 
     private ?string $audioKey = null;
 
     #[ORM\Column]
-    #[Groups('story:read', 'recording:read')] // ajout de cette ligne
+    #[Groups('story:read')] 
     private ?\DateTime $createdAt = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups('story:read', 'recording:read')] // ajout de cette ligne
+    #[Groups('story:read')] 
     private ?string $narrator = null;
 
     #[ORM\ManyToOne(inversedBy: 'recordings')]
