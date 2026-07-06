@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 // ajout de cette ligne 
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: StoryRepository::class)]
 #[ApiResource(
@@ -24,8 +24,8 @@ class Story
     #[ORM\CustomIdGenerator('doctrine.uuid_generator')]
     private ?Uuid $id = null;
 
-    #[Groups('story:read')] // ajout de cette ligne
     #[ORM\Column(length: 255)]
+    #[Groups('story:read')] // ajout de cette ligne
     private ?string $title = null;
 
     #[ORM\Column(length: 13)]
